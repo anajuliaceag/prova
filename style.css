@@ -1,0 +1,9 @@
+header {
+    text-align: center;
+    background-color:rgb(253, 230, 255);
+    padding: 30px
+}
+h1{
+    font-size: 30px;
+    font-weight: bold;
+}
