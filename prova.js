@@ -1,31 +1,44 @@
+let times = [];
+
 function inscricao() {
-    let mostraHTML = document.getElementById("mostraHTML");
-    let time = prompt("Digite o nome do seu time: ");
 
-    let jogador1 = prompt("Escreva o nome do primeiro jogador: ");
-    let idade1 = Number(window.prompt("Digite sua idade:"));
+  if (times.length >= 4) {
+    document.getElementById("avisos").innerHTML = "Limite de times atingido.";
+    return;
+  }
+   let nomeTime = prompt("Nome do time:");
+   if (!nomeTime) return;
+   nomeTime = nomeTime.toUpperCase();
 
-    let jogador2 = prompt("Escreva o nome do segundo jogador: ");
-    let idade2 = Number(window.prompt("Digite sua idade:"));
+ 
+    let soma = 0;
+    let jogadores = [];
+    for (let i = 1; i <= 3; i++) {
+    let nome = prompt("Nome do jogador " + i + ":").toLowerCase();
+    let idade = parseInt(prompt("Idade de " + nome + ":"));
+    if (!nome || isNaN(idade)) return;
+    jogadores.push({ nome, idade });
+    soma += idade;
+  }
 
-    let jogador3 = prompt("Escreva o nome do terceiro jogador: ");
-    let idade3 = Number(window.prompt("Digite sua idade"));
+  let media = Math.round(soma / 3);
+  if (media > 15) {
+    document.getElementById("avisos").innerHTML = "Média acima de 15. Cadastre outro time.";
+    return;
+  }
 
-    let media;
+  times.push({ nome: nomeTime, media, jogadores });
+  mostrarTimes();
+}
 
-    mostraHTML.innerHTML = `<p>${time}</p>`
-    mostraHTML.innerHTML = `<p>Primeiro jogador: ${jogador1}. ${idade1}. 
-    Segundo jogador: ${jogador2}. ${idade2}. 
-    Terceiro jogador: ${jogador3}. ${idade3}</p>`
-   
-  
-
-    media = (idade1 + idade2 + idade3) / 3;
-    if(media > 15)  
-         alert("O time não poderá jogar o campeonato")
-   
-
-
-
-
+function mostrarTimes() {
+  var html = "";
+  for (let t of times) {
+    html += "<div class='time'><strong>" + t.nome + ", " + t.media + "</strong><br>";
+    for (let j of t.jogadores)
+      html += "<div class='jogador'>" + j.nome + ", " + j.idade + "</div>";
+    html += "</div>";
+  }
+  document.getElementById("listaTimes").innerHTML = html;
+  document.getElementById("avisos").innerHTML = "";
 }
